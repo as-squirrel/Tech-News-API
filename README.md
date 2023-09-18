@@ -1,5 +1,8 @@
 # Tech News API
 
+![1 (1)](https://github.com/as-squirrel/Tech-News-API/assets/114065413/66a3d3c9-f8d0-44fe-95bd-4e892200e56f)
+
+
 The Tech News API is a web service built using Node.js and Express.js. It allows users to access news articles related to technology from trusted sources. With this API users can retrieve headlines, sources and search, for articles based on keywords.
 
 ## Features
