@@ -41,3 +41,24 @@ npm start
 3. **Find Relevant News;** Utilize the `/search` endpoint adding a `keyword` query parameter to discover news articles that specifically mention keywords.
 
 4. **Narrow Down, by Date;** Employ the `/news/date/;date` endpoint to locate news articles published on a date (`/news/date/2023 09 15`).
+
+5. ## Technologies Used
+
+- Node.js
+- Express.js
+- Axios
+- Cheerio (for web scraping)
+
+## Sources
+
+This project uses web scraping to gather news articles from various sources, including:
+
+- USA Today
+- The New York Times
+- Reuters
+- CNN
+
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
