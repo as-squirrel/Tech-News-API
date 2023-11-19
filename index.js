@@ -62,42 +62,40 @@ app.get('/search', async (req, res) => {
                 const html = response.data;
                 const $ = cheerio.load(html);
 
-                if (newspaper.name === 'nytimes') {
-                    $('.css-uuu4k4').each(function () {
-                        const title = $(this).find('h3.css-miszbp.e1hr934v2 a').text();
-                        const url = 'https://www.nytimes.com' + $(this).find('h3.css-miszbp.e1hr934v2 a').attr('href');
-                        const imageUrl = $(this).find('img').attr('src');
-                        const articleText = $(this).find('p.css-tskdi9.e1hr934v5').text();
+                let selector = '';
+                let titleSelector = '';
+                let textSelector = '';
 
-                        if (articleText.toLowerCase().includes(keyword.toLowerCase())) {
-                            articles.push({
-                                title,
-                                url,
-                                imageUrl,
-                                source: newspaper.name
-                            });
-                        }
-                    });
-                } else if (newspaper.name === 'reuters') {
-                    $('li.story-collection__story__LeZ29').each(function () {
-                        const title = $(this).find('h3.text__medium__1kbOh a').text();
-                        const url = 'https://www.reuters.com' + $(this).find('h3.text__medium__1kbOh a').attr('href');
-                        const imageUrl = $(this).find('img').attr('src');
-                        const date = $(this).find('time.text__regular__2N1Xr').text();
-                        const articleText = $(this).find('p.text__regular__2N1Xr').text();
-
-                        if (articleText.toLowerCase().includes(keyword.toLowerCase()) || title.toLowerCase().includes(keyword.toLowerCase())) {
-                            articles.push({
-                                title,
-                                url,
-                                imageUrl,
-                                date,
-                                source: newspaper.name
-                            });
-                        }
-                    });
+                switch (newspaper.name) {
+                    case 'nytimes':
+                        selector = '.css-uuu4k4';
+                        titleSelector = 'h3.css-miszbp.e1hr934v2 a';
+                        textSelector = 'p.css-tskdi9.e1hr934v5';
+                        break;
+                    case 'reuters':
+                        selector = 'li.story-collection__story__LeZ29';
+                        titleSelector = 'h3.text__medium__1kbOh a';
+                        textSelector = 'p.text__regular__2N1Xr';
+                        break;
+                    default:
+                        break;
                 }
 
+                $(selector).each(function () {
+                    const title = $(this).find(titleSelector).text();
+                    const url = $(this).find(titleSelector).attr('href');
+                    const imageUrl = $(this).find('img').attr('src');
+                    const articleText = $(this).find(textSelector).text();
+
+                    if (articleText.toLowerCase().includes(keyword.toLowerCase()) || title.toLowerCase().includes(keyword.toLowerCase())) {
+                        articles.push({
+                            title,
+                            url,
+                            imageUrl,
+                            source: newspaper.name
+                        });
+                    }
+                });
             })
         );
 
@@ -107,6 +105,7 @@ app.get('/search', async (req, res) => {
         res.status(500).json({ error: 'An error occurred' });
     }
 });
+
 
 
 
